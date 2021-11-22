@@ -1,0 +1,26 @@
+name: Basic React App
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Basic Expence Tracker app
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 12
+
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install # will run `yarn install` command
+      - name: Build React APP
+        run: sudo yarn build
+      - name: Install Surge
+        run: npm install -g surge
+      - name: Run surge
+        run: surge ./build basic-react-expense-tracker-m-rehan.surge.sh --token ${{ secrets.SURGETOKEN }}
+
+          
